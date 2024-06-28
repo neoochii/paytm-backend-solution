@@ -9,14 +9,14 @@ const { JWT_SECRET } = require("../config");
 const  { authMiddleware } = require("../middleware");
 
 const signupBody = zod.object({
-    username: zod.string().email(),
+    username: zod.string(),
 	firstName: zod.string(),
 	lastName: zod.string(),
 	password: zod.string()
 })
 
 router.post("/signup", async (req, res) => {
-    const { success } = signupBody
+    const { success } = signupBody.safeParse(req.body)
     if (!success) {
         return res.status(411).json({
             message: "Incorrect inputs"
