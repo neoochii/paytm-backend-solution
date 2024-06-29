@@ -32,13 +32,14 @@ export const Signup = () => {
         setPassword(e.target.value)
       }}placeholder="123456" label={"Password"} />
       <div className="pt-4">
-        <Button onclick={()=>{
-          axios.post("http://localhost:3000/api/v1/user/signup",{
+        <Button onclick={async()=>{
+          const response = await axios.post("http://localhost:3000/api/v1/user/signup",{
             username,
             firstName,
             lastName,
             password
           })
+            localStorage.setItem("token",response.data.token)
         }} label={"Sign up"} />
          </div>
         <BottomWarning label={"Already have an account?"} buttonText={"Sign in"} to={"/signin"} />
